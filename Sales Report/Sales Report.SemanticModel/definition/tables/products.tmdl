@@ -1,0 +1,60 @@
+table products
+	lineageTag: 8922fdc9-39e5-4478-aeca-30313fc318e6
+
+	measure 'Total Products' = COUNT(products[PID])
+		formatString: 0
+		lineageTag: 8f3a57a9-694c-40d6-8833-d1f787854417
+
+	column PID
+		dataType: string
+		lineageTag: 3fd82f70-0a9b-4702-9d10-0285a0bb81e3
+		summarizeBy: none
+		sourceColumn: PID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: ba249fe4-3911-4803-b964-0984eb4a4d2e
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 4d9df997-6ee0-4e54-b32c-aeadd93dfac4
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Size
+		dataType: string
+		lineageTag: faa5e738-4d36-4093-a9be-a9bd25c142b5
+		summarizeBy: none
+		sourceColumn: Size
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cost_per_Box
+		dataType: double
+		lineageTag: 9ed27bf2-71e3-41b0-9063-bb5727c04276
+		summarizeBy: none
+		sourceColumn: Cost_per_Box
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition products = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("EIT-6-HRADIKPRA", "Awosome"),
+				    dbo_products = Source{[Schema="dbo",Item="products"]}[Data]
+				in
+				    dbo_products
+
+	annotation PBI_ResultType = Table
+

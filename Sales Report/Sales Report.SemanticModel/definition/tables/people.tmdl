@@ -1,0 +1,50 @@
+table people
+	lineageTag: 6df51d91-9db1-49a6-8f4a-f8fa8c11e91b
+
+	measure 'Total Sales Person' = COUNT(people[SPID])
+		formatString: 0
+		lineageTag: df3b2d66-6773-45b8-9af9-ca0c1d73eeec
+
+	column Sales_person
+		dataType: string
+		lineageTag: 36e60964-eb09-4ff6-949f-3d3f2f53e90d
+		summarizeBy: none
+		sourceColumn: Sales_person
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPID
+		dataType: string
+		lineageTag: 93625d24-4742-4263-803d-8d66c6ce7e3e
+		summarizeBy: none
+		sourceColumn: SPID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Team
+		dataType: string
+		lineageTag: 0409299a-f68b-4c75-a7cd-f0f9a71fbfd5
+		summarizeBy: none
+		sourceColumn: Team
+
+		annotation SummarizationSetBy = Automatic
+
+	column Location
+		dataType: string
+		lineageTag: 68877474-0394-42e5-9fc2-ef6b9a952c87
+		summarizeBy: none
+		sourceColumn: Location
+
+		annotation SummarizationSetBy = Automatic
+
+	partition people = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("EIT-6-HRADIKPRA", "Awosome"),
+				    dbo_people = Source{[Schema="dbo",Item="people"]}[Data]
+				in
+				    dbo_people
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,42 @@
+table geo
+	lineageTag: a829b39e-5576-4d35-a2a9-0d7898ab9f36
+
+	measure 'Total Geography' = Count(geo[GeoID])
+		formatString: 0
+		lineageTag: 321483e5-b604-452f-ab9d-cf83b72ea112
+
+	column GeoID
+		dataType: string
+		lineageTag: 46f9f950-c7bf-4ae1-9943-b0f8dccd7045
+		summarizeBy: none
+		sourceColumn: GeoID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Geo
+		dataType: string
+		lineageTag: 17ebe9a8-0339-4d9b-843e-293bcf3c88e0
+		summarizeBy: none
+		sourceColumn: Geo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 0d29c421-9155-414a-8b5b-b69b2e05b829
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition geo = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("EIT-6-HRADIKPRA", "Awosome"),
+				    dbo_geo = Source{[Schema="dbo",Item="geo"]}[Data]
+				in
+				    dbo_geo
+
+	annotation PBI_ResultType = Table
+

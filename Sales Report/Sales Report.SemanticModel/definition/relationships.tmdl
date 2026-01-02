@@ -1,0 +1,17 @@
+relationship e94602df-ea5e-417c-84f2-4cd498ab3206
+	joinOnDateBehavior: datePartOnly
+	fromColumn: sales.Date
+	toColumn: LocalDateTable_464e3d2b-8ca3-4ab4-a16b-8a7c2c01ee62.Date
+
+relationship AutoDetected_fc1273e3-ba38-4403-845f-372dab1fbd9c
+	fromColumn: sales.GeoID
+	toColumn: geo.GeoID
+
+relationship AutoDetected_0b8d1ebd-1745-40c6-af39-91e34519c6cb
+	fromColumn: sales.SPID
+	toColumn: people.SPID
+
+relationship AutoDetected_d0339a92-fef1-470b-b9a9-e491afc916e6
+	fromColumn: sales.PID
+	toColumn: products.PID
+

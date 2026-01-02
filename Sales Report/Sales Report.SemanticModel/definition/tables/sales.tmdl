@@ -1,0 +1,92 @@
+table sales
+	lineageTag: 2537b7c0-e56f-49f9-b495-00788f7cde15
+
+	measure 'Total Sales' = Sum(sales[Amount])
+		formatString: 0
+		lineageTag: 335d4dd8-f121-4845-8dc3-2e997dc4717f
+
+	column SPID
+		dataType: string
+		lineageTag: 51df3754-d7cb-4b69-bfe4-e3e28ff0b0c2
+		summarizeBy: none
+		sourceColumn: SPID
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeoID
+		dataType: string
+		lineageTag: 412c44c1-c6e7-4b1f-b2e7-6858ea0e7b6f
+		summarizeBy: none
+		sourceColumn: GeoID
+
+		annotation SummarizationSetBy = Automatic
+
+	column PID
+		dataType: string
+		lineageTag: f0acf399-ec63-4daa-b311-0377959ef33a
+		summarizeBy: none
+		sourceColumn: PID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ac327522-6fbe-4002-be3b-a867a9520358
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: e94602df-ea5e-417c-84f2-4cd498ab3206
+			defaultHierarchy: LocalDateTable_464e3d2b-8ca3-4ab4-a16b-8a7c2c01ee62.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Amount
+		dataType: int64
+		formatString: 0
+		lineageTag: 116138ae-44ea-45d3-a3a2-46038731b9eb
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customers
+		dataType: int64
+		formatString: 0
+		lineageTag: 2c836ae8-97a0-48e6-bdbd-02f76d0c90f1
+		summarizeBy: sum
+		sourceColumn: Customers
+
+		annotation SummarizationSetBy = Automatic
+
+	column Boxes
+		dataType: int64
+		formatString: 0
+		lineageTag: 77125c6d-68fe-4bce-8412-d64b883913cc
+		summarizeBy: sum
+		sourceColumn: Boxes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Amount' = sales[Amount] * sales[Boxes]
+		formatString: 0
+		lineageTag: ea009fa7-d2e6-4737-bfea-3fac2c2919c4
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sales = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("EIT-6-HRADIKPRA", "Awosome"),
+				    dbo_sales = Source{[Schema="dbo",Item="sales"]}[Data]
+				in
+				    dbo_sales
+
+	annotation PBI_ResultType = Table
+
